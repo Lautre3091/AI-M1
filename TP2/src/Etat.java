@@ -6,6 +6,7 @@
 
 import java.util.Vector;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class Etat implements Comparable<Etat>{
 	public static final int[][] ETAT_FINAL1 = {
 		{1,2,3},
@@ -16,19 +17,19 @@ public class Etat implements Comparable<Etat>{
 		{4,5,6},
 		{7,8,0}};
 	
-	private Etat _pere; //l'état précédent 
+	private Etat _pere; //l'ï¿½tat prï¿½cï¿½dent 
 	private int[][] _taquin; //la configuration de jeu
-	private int _xVide; //les coordonnées de la case vide
+	private int _xVide; //les coordonnï¿½es de la case vide
 	private int _yVide;
-	private Vector<Deplacement> _coups; //la suite de déplacements de la case vide
+	private Vector<Deplacement> _coups; //la suite de dï¿½placements de la case vide
 	private int _nbCoups;
-	private int _valG; //les valeurs des fonctions associées à la configuration
+	private int _valG; //les valeurs des fonctions associï¿½es ï¿½ la configuration
 	private int _valF;
 	
 	
 	/**
 	 * Constructeur.
-	 * @param tab : le tableau décrivant la configuration de jeu.
+	 * @param tab : le tableau dï¿½crivant la configuration de jeu.
 	 */
 	public Etat(int[][] tab, FonctionHeuristique heurist){
 		_pere = null;
@@ -43,16 +44,16 @@ public class Etat implements Comparable<Etat>{
 			}
 		}
 		_coups = new Vector<Deplacement>();
-		_nbCoups = 0;
-		_valG = 0;
-		int valH = heurist.heuristique(this);
-		_valF = _valG + valH;
+        _nbCoups = 0;
+        _valG = 0;
+        int valH = heurist.heuristique(this);
+        _valF = _valG + valH;
 	}
 	
 	
 	/**
 	 * Constructeur.
-	 * @param tab : le tableau décrivant la configuration de jeu.
+	 * @param tab : le tableau dï¿½crivant la configuration de jeu.
 	 */
 	public Etat(int[][] tab){
 		_pere = null;
@@ -74,8 +75,8 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Constructeur qui recopie l'état e dans l'état courant.
-	 * @param e : l'état à cloner.
+	 * Constructeur qui recopie l'ï¿½tat e dans l'ï¿½tat courant.
+	 * @param e : l'ï¿½tat ï¿½ cloner.
 	 */
 	public Etat(Etat e){
 		_pere = e._pere;
@@ -99,8 +100,8 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne le père de l'état courant.
-	 * @return le père de l'état courant.
+	 * Mï¿½thode qui donne le pï¿½re de l'ï¿½tat courant.
+	 * @return le pï¿½re de l'ï¿½tat courant.
 	 */
 	public Etat getPere(){
 		return _pere;
@@ -108,7 +109,7 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne la valeur de la fonction d'évaluation g.
+	 * Mï¿½thode qui donne la valeur de la fonction d'ï¿½valuation g.
 	 * @return la valeur de la fonction g.
 	 */
 	public int getValG(){
@@ -117,7 +118,7 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne la valeur de la fonction d'évaluation f.
+	 * Mï¿½thode qui donne la valeur de la fonction d'ï¿½valuation f.
 	 * @return la valeur de la fonction f.
 	 */
 	public int getValF(){
@@ -126,9 +127,9 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne la valeur de la case de coordonnées données.
+	 * Mï¿½thode qui donne la valeur de la case de coordonnï¿½es donnï¿½es.
 	 * @param i : l'abscisse de la case.
-	 * @param j : l'ordonnée de la case.
+	 * @param j : l'ordonnï¿½e de la case.
 	 * @return la valeur de la case.
 	 */
 	public int getVal(int i, int j){
@@ -143,8 +144,8 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne l'abscisse du nombre n.
-	 * @param n : le nombre considéré.
+	 * Mï¿½thode qui donne l'abscisse du nombre n.
+	 * @param n : le nombre considï¿½rï¿½.
 	 * @return l'abscisse de n.
 	 */
 	public int getX(int n){
@@ -163,9 +164,9 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne ordonnée du nombre n.
-	 * @param n : le nombre considéré.
-	 * @return ordonnée de n.
+	 * Mï¿½thode qui donne ordonnï¿½e du nombre n.
+	 * @param n : le nombre considï¿½rï¿½.
+	 * @return ordonnï¿½e de n.
 	 */
 	public int getY(int n){
 		int y = -1;
@@ -183,8 +184,8 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui dit si l'état courant est un état final.
-	 * @return vrai si l'état courant correspond à un des 2 états finaux.
+	 * Mï¿½thode qui dit si l'ï¿½tat courant est un ï¿½tat final.
+	 * @return vrai si l'ï¿½tat courant correspond ï¿½ un des 2 ï¿½tats finaux.
 	 */
 	public boolean estFinal(){
 		Etat eFinal1 = new Etat(ETAT_FINAL1);
@@ -196,52 +197,74 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui donne les états successeurs de l'état courant,
-	 * calculés selon l'emplacement de la case vide et en utilisant
-	 * la fonction heuristique donnée.
-	 * @return les états successeurs.
+	 * Mï¿½thode qui donne les ï¿½tats successeurs de l'ï¿½tat courant,
+	 * calculï¿½s selon l'emplacement de la case vide et en utilisant
+	 * la fonction heuristique donnï¿½e.
+	 * @return les ï¿½tats successeurs.
 	 */
 	public Vector<Etat> getSuccesseurs(FonctionHeuristique heurist){
-		Deplacement d;
 		Vector<Etat> succs = new Vector<Etat>();
 		
-		Deplacement[] depl = Deplacement.values(); //l'ensemble des déplacements
-		//à compléter...
-		
+		Deplacement[] depl = Deplacement.values(); //l'ensemble des dÃ©placements
+
+        for (Deplacement aDepl : depl) {
+            if (deplacementPossible(aDepl)) 
+                succs.add(etendEtat(aDepl, heurist));
+        }
 		return succs;
 	}
 	
-	
 	/**
-	 * Méthode qui dit s'il est possible de déplacer la case vide,
-	 * dans la direction donnée par d.
-	 * @param d : la direction pour déplacer la case vide.
-	 * @return vrai si la case vide peut être déplacée dans la direction d.
+	 * Mï¿½thode qui dit s'il est possible de dï¿½placer la case vide,
+	 * dans la direction donnï¿½e par d.
+	 * @param d : la direction pour dï¿½placer la case vide.
+	 * @return vrai si la case vide peut ï¿½tre dï¿½placï¿½e dans la direction d.
 	 */
 	private boolean deplacementPossible(Deplacement d){
 		boolean depl = true;
 		
-		//à compléter...
-		
+		switch (d){
+            case gauche: depl =_yVide != 2;
+                break;
+            case droite : depl =_yVide != 0;
+                break;
+            case haut: depl =_xVide != 0;
+                break;
+            case bas : depl =_xVide != 2;
+                break;
+        }
 		return depl;
 	}
 	
 	
 	/**
-	 * Méthode qui étend l'état courant, en déplaçant la case vide
-	 * dans la direction donnée par d.
-	 * @param d : la direction pour déplacer la case vide.
-	 * @return l'état créé à partir de l'état courant
+	 * Mï¿½thode qui ï¿½tend l'ï¿½tat courant, en dï¿½plaï¿½ant la case vide
+	 * dans la direction donnï¿½e par d.
+	 * @param d : la direction pour dï¿½placer la case vide.
+	 * @return l'ï¿½tat crï¿½ï¿½ ï¿½ partir de l'ï¿½tat courant
 	 */
 	private Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
 		Etat etat = new Etat(this);
 		etat._pere = this;
 		
-		//déplacement de la case vide
-		//à compléter...
-		
-		//mise à jour des fonctions d'évaluation 
-		//à compléter...
+		//dÃ©placement de la case vide
+        switch (d){
+            case gauche : etat._yVide=etat._yVide+1;
+                break;
+            case droite : etat._yVide=etat._yVide-1;
+                break;
+            case haut : etat._xVide=etat._xVide+1;
+                break;
+            case bas : etat._xVide=_xVide-1;
+                break;
+        }
+
+        //mise Ã  jour des fonctions d'Ã©valuation
+        etat._coups.add(d);
+        etat._nbCoups++;
+        etat._valG++;
+        int valH = heurist.heuristique(etat);
+        etat._valF = etat._valG + valH;
 		
 		return etat;
 	}
@@ -249,7 +272,7 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui affiche la séquence de configurations.
+	 * Mï¿½thode qui affiche la sï¿½quence de configurations.
 	 */
 	public void afficherParcours(){
 		if(_pere != null){
@@ -260,8 +283,8 @@ public class Etat implements Comparable<Etat>{
 	
 
 	/**
-	 * Méthode qui donne la représentation de l'état, sous forme de chaîne.
-	 * @return la chaîne représentant l'état.
+	 * Mï¿½thode qui donne la reprï¿½sentation de l'ï¿½tat, sous forme de chaï¿½ne.
+	 * @return la chaï¿½ne reprï¿½sentant l'ï¿½tat.
 	 */
 	public String toString(){
 		String str = "";
@@ -281,8 +304,8 @@ public class Etat implements Comparable<Etat>{
 		//les valeurs des fonctions
 		str += "f = " + _valF + " (g = " + _valG + ")\n";
 		
-		//les déplacements de la case vide
-		str += _nbCoups + " déplacements : ";
+		//les dï¿½placements de la case vide
+		str += _nbCoups + " dï¿½placements : ";
 		for(int i = 0; i < _nbCoups; i++){
 			if(i > 0) str += " - ";
 			switch(_coups.get(i)){
@@ -306,9 +329,9 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode qui dit si 2 états sont égaux, au niveau des configurations.
-	 * @param e : l'état avec lequel comparer l'état courant.
-	 * @return vrai si les états correspondent à la même configuration.
+	 * Mï¿½thode qui dit si 2 ï¿½tats sont ï¿½gaux, au niveau des configurations.
+	 * @param e : l'ï¿½tat avec lequel comparer l'ï¿½tat courant.
+	 * @return vrai si les ï¿½tats correspondent ï¿½ la mï¿½me configuration.
 	 */
 	public boolean equals(Etat e){
 		boolean eq = true;
@@ -324,16 +347,16 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * Méthode de l'interface Comparable, à implémenter.
-	 * @param e : l'état avec lequel comparer l'état courant.
-	 * @return -1, 0 ou 1 selon que l'état e est inférieur, égal
-	 * ou supérieur à l'état courant, respectivement.
+	 * Mï¿½thode de l'interface Comparable, ï¿½ implï¿½menter.
+	 * @param e : l'ï¿½tat avec lequel comparer l'ï¿½tat courant.
+	 * @return -1, 0 ou 1 selon que l'ï¿½tat e est infï¿½rieur, ï¿½gal
+	 * ou supï¿½rieur ï¿½ l'ï¿½tat courant, respectivement.
 	 */
 	public int compareTo(Etat e){
 		int res = -1;
 		
 		//classement dans l'ordre croissant de f 
-		//puis dans l'ordre décroissant de g
+		//puis dans l'ordre dï¿½croissant de g
 		if(e._valF < _valF){
 			res = -1;
 		}
