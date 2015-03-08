@@ -91,7 +91,6 @@ public class Taquin {
                 succs = etat.getSuccesseurs(heurist);
                 for (Etat succ : succs) {
                     nbNoeuds++;
-                    succ.afficherParcours();
                     Etat succ_f = fermes.get(succ);
                     Etat succ_o = ouverts.get(succ);
                     if (succ_f!=null) {

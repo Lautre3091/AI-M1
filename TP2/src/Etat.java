@@ -220,13 +220,13 @@ public class Etat implements Comparable<Etat>{
 		boolean depl = true;
 		
 		switch (d){
-            case gauche: depl =_yVide != 2;
+            case gauche: depl =(_yVide <= 2 && 0<_yVide);
                 break;
-            case droite : depl =_yVide != 0;
+            case droite : depl =(_yVide < 2 && 0<=_yVide);
                 break;
-            case  bas: depl =_xVide != 2;
+            case  haut: depl =(_xVide <= 2 && 0<_xVide);
                 break;
-            case  haut: depl =_xVide != 0;
+            case  bas: depl =(_xVide < 2 && 0<=_xVide);
                 break;
         }
 		return depl;
@@ -242,40 +242,28 @@ public class Etat implements Comparable<Etat>{
 	private Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
 		Etat etat = new Etat(this);
 		etat._pere = this;
-        //TODO Faire un fonction de switch de deux valeur ASAP
+
         //déplacement de la case vide
         switch(d){
-            case haut:
-                //recup de la valeur rremplacer par le vide
-                int ValDeplacée = getVal(_xVide-1, _yVide);
-                etat._taquin[_xVide][_yVide]=
-                etat._taquin[_xVide-1][_yVide]=0; //on deplace en haut la casse vide
-                break;
-            case bas:
-                tmp=getVal(_xVide+1, _yVide);
-                etat._taquin[_xVide+1][_yVide]=0; //on deplace en bas la casse vide
-                etat._taquin[_xVide][_yVide]=tmp;
-                break;
             case gauche:
-                tmp=getVal(_xVide, _yVide-1);
-                etat._taquin[_xVide][_yVide-1]=0; //on deplace ˆ gauche la casse vide
-                etat._taquin[_xVide][_yVide]=tmp;
+                swapCase(etat,etat._xVide,etat._yVide,etat._xVide,etat._yVide-1);
+                etat._yVide--;
                 break;
             case droite:
-                tmp=getVal(_xVide, _yVide+1);
-                etat._taquin[_xVide][_yVide+1]=0; //on deplace ˆ droite la casse vide
-                etat._taquin[_xVide][_yVide]=tmp;
+                swapCase(etat,etat._xVide,etat._yVide,etat._xVide,etat._yVide+1);
+                etat._yVide++;
+                break;
+            case haut:
+                swapCase(etat,etat._xVide,etat._yVide,etat._xVide-1,etat._yVide);
+                etat._xVide--;
+                break;
+            case bas:
+                swapCase(etat,etat._xVide,etat._yVide,etat._xVide+1,etat._yVide);
+                etat._xVide++;
                 break;
         }
 
-
-        //mise à jour des fonctions d'évaluation
-       /* etat._valG = _valG +1; //il faut verifier
-        etat._valF = etat._valG + heurist.heuristique(etat);//il faut verifier
-*/
-
-
-        //mise à jour des fonctions d'évaluation
+       //mise à jour des fonctions d'évaluation
         etat._coups.add(d);
         etat._nbCoups++;
         etat._valG++;
@@ -284,11 +272,16 @@ public class Etat implements Comparable<Etat>{
         //System.out.println("_valG ["+etat._valG+"]  _valF["+etat._valF+"]  H["+heurist.heuristique(etat)+"]");
 		return etat;
 	}
-	
-	
+
+    /*Echange la valeur de x1y1 avec celle de x2y2*/
+	private void swapCase(Etat etat, int x1,int y1,int x2,int y2){
+        int tmp = etat.getVal(x1, y1);
+        etat._taquin[x1][y1]= etat._taquin[x2][y2];
+        etat._taquin[x2][y2]=tmp;
+    }
 	
 	/**
-	 * M�thode qui affiche la s�quence de configurations.
+	 * Méthode qui affiche la séquence de configurations.
 	 */
 	public void afficherParcours(){
 		if(_pere != null){
