@@ -17,13 +17,13 @@ public class Etat implements Comparable<Etat>{
 		{4,5,6},
 		{7,8,0}};
 	
-	private Etat _pere; //l'�tat pr�c�dent 
+	private Etat _pere; //l'état précédent 
 	private int[][] _taquin; //la configuration de jeu
-	private int _xVide; //les coordonn�es de la case vide
+	private int _xVide; //les coordonnées de la case vide
 	private int _yVide;
-	private Vector<Deplacement> _coups; //la suite de d�placements de la case vide
+	private Vector<Deplacement> _coups; //la suite de déplacements de la case vide
 	private int _nbCoups;
-	private int _valG; //les valeurs des fonctions associ�es � la configuration
+	private int _valG; //les valeurs des fonctions associées à la configuration
 	private int _valF;
 	
 	
@@ -82,9 +82,7 @@ public class Etat implements Comparable<Etat>{
 		_pere = e._pere;
 		_taquin = new int[3][3];
 		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++){
-				_taquin[i][j] = e._taquin[i][j];
-			}
+            System.arraycopy(e._taquin[i], 0, _taquin[i], 0, 3);
 		}
 		_xVide = e._xVide;
 		_yVide = e._yVide;
@@ -204,12 +202,10 @@ public class Etat implements Comparable<Etat>{
 	 */
 	public Vector<Etat> getSuccesseurs(FonctionHeuristique heurist){
 		Vector<Etat> succs = new Vector<Etat>();
-		
-		Deplacement[] depl = Deplacement.values(); //l'ensemble des déplacements
 
-        for (Deplacement aDepl : depl) {
-            if (deplacementPossible(aDepl)) 
-                succs.add(etendEtat(aDepl, heurist));
+        for (Deplacement d : Deplacement.values()) {
+            if (deplacementPossible(d))
+                succs.add(etendEtat(d, heurist));
         }
 		return succs;
 	}
@@ -228,9 +224,9 @@ public class Etat implements Comparable<Etat>{
                 break;
             case droite : depl =_yVide != 0;
                 break;
-            case haut: depl =_xVide != 0;
+            case  bas: depl =_xVide != 2;
                 break;
-            case bas : depl =_xVide != 2;
+            case  haut: depl =_xVide != 0;
                 break;
         }
 		return depl;
@@ -238,34 +234,54 @@ public class Etat implements Comparable<Etat>{
 	
 	
 	/**
-	 * M�thode qui �tend l'�tat courant, en d�pla�ant la case vide
-	 * dans la direction donn�e par d.
+	 * M�thode qui étend l'état courant, en déplaéant la case vide
+	 * dans la direction donnée par d.
 	 * @param d : la direction pour d�placer la case vide.
-	 * @return l'�tat cr�� � partir de l'�tat courant
+	 * @return l'état créé à partir de l'�tat courant
 	 */
 	private Etat etendEtat(Deplacement d, FonctionHeuristique heurist){
 		Etat etat = new Etat(this);
 		etat._pere = this;
-		
-		//déplacement de la case vide
-        switch (d){
-            case gauche : etat._yVide=etat._yVide+1;
+        //TODO Faire un fonction de switch de deux valeur ASAP
+        //déplacement de la case vide
+        switch(d){
+            case haut:
+                //recup de la valeur rremplacer par le vide
+                int ValDeplacée = getVal(_xVide-1, _yVide);
+                etat._taquin[_xVide][_yVide]=
+                etat._taquin[_xVide-1][_yVide]=0; //on deplace en haut la casse vide
                 break;
-            case droite : etat._yVide=etat._yVide-1;
+            case bas:
+                tmp=getVal(_xVide+1, _yVide);
+                etat._taquin[_xVide+1][_yVide]=0; //on deplace en bas la casse vide
+                etat._taquin[_xVide][_yVide]=tmp;
                 break;
-            case haut : etat._xVide=etat._xVide+1;
+            case gauche:
+                tmp=getVal(_xVide, _yVide-1);
+                etat._taquin[_xVide][_yVide-1]=0; //on deplace ˆ gauche la casse vide
+                etat._taquin[_xVide][_yVide]=tmp;
                 break;
-            case bas : etat._xVide=_xVide-1;
+            case droite:
+                tmp=getVal(_xVide, _yVide+1);
+                etat._taquin[_xVide][_yVide+1]=0; //on deplace ˆ droite la casse vide
+                etat._taquin[_xVide][_yVide]=tmp;
                 break;
         }
+
+
+        //mise à jour des fonctions d'évaluation
+       /* etat._valG = _valG +1; //il faut verifier
+        etat._valF = etat._valG + heurist.heuristique(etat);//il faut verifier
+*/
+
 
         //mise à jour des fonctions d'évaluation
         etat._coups.add(d);
         etat._nbCoups++;
         etat._valG++;
-        int valH = heurist.heuristique(etat);
-        etat._valF = etat._valG + valH;
-		
+        etat._valF = etat._valG + heurist.heuristique(etat);
+
+        //System.out.println("_valG ["+etat._valG+"]  _valF["+etat._valF+"]  H["+heurist.heuristique(etat)+"]");
 		return etat;
 	}
 	
@@ -304,8 +320,8 @@ public class Etat implements Comparable<Etat>{
 		//les valeurs des fonctions
 		str += "f = " + _valF + " (g = " + _valG + ")\n";
 		
-		//les d�placements de la case vide
-		str += _nbCoups + " d�placements : ";
+		//les déplacements de la case vide
+		str += _nbCoups + " déplacements : ";
 		for(int i = 0; i < _nbCoups; i++){
 			if(i > 0) str += " - ";
 			switch(_coups.get(i)){

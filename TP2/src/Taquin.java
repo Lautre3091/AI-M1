@@ -33,7 +33,7 @@ public class Taquin {
 		if(etatFinal1 != null) etatFinal1.afficherParcours();
 		else System.out.println("Aucune solution"); 
 		
-        System.out.println("\n**********\n\n");
+       System.out.println("\n**********\n\n");
 		
 		System.out.println("Avec la 2éme heuristique");
 		etatInit1 = new Etat(tabInit1, heurist2);
@@ -71,7 +71,7 @@ public class Taquin {
 	 * @return l'état final.
 	 */
 	public static Etat algoAEtoile(Etat etatInit, FonctionHeuristique heurist){
-		Etat etat, succ;
+		Etat etat;
 		Vector<Etat> succs;
 		SetTaquin fermes = new SetTaquin();
 		FileTaquin ouverts = new FileTaquin();
@@ -89,9 +89,9 @@ public class Taquin {
             else{
                 fermes.add(etat);
                 succs = etat.getSuccesseurs(heurist);
-                for (Etat succ1 : succs) {
-                    succ = succ1;
+                for (Etat succ : succs) {
                     nbNoeuds++;
+                    succ.afficherParcours();
                     Etat succ_f = fermes.get(succ);
                     Etat succ_o = ouverts.get(succ);
                     if (succ_f!=null) {
