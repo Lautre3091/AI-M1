@@ -1,9 +1,3 @@
-/*
- * TP 3 : Puissance 4
- * 
- * @author Tassadit BOUADI.
- */
-
 /**
  * Programme principal du jeu du puissance 4.
  * 

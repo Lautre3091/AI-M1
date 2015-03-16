@@ -5,7 +5,7 @@
  */
 
 /**
- * Interface pour la définition d'une fonction d'évaluation d'une grille.
+ * Interface pour la dï¿½finition d'une fonction d'ï¿½valuation d'une grille.
  * 
  */
 public interface FonctionEvaluation{
@@ -14,12 +14,12 @@ public interface FonctionEvaluation{
 	
 
 	/**
-	 * Fonction qui donne une valeur à la grille, pour le joueur,
-	 * de telle façon que la valeur soit égale à MAX si joueur gagne,
-	 * égale à 0 s'il y a match nul et égale à MIN si joueur perd.
+	 * Fonction qui donne une valeur ï¿½ la grille, pour le joueur,
+	 * de telle faï¿½on que la valeur soit ï¿½gale ï¿½ MAX si joueur gagne,
+	 * ï¿½gale ï¿½ 0 s'il y a match nul et ï¿½gale ï¿½ MIN si joueur perd.
 	 * @param grille : la grille de puissance 4.
 	 * @param joueur : le joueur qui joue le coup.
-	 * @return la valeur donnée à la grille, pour le joueur.
+	 * @return la valeur donnï¿½e ï¿½ la grille, pour le joueur.
 	 */
 	public double evaluation(Grille grille, int joueur);
 }

@@ -5,10 +5,10 @@
  */
 
 /**
- * Joueur qui choisit al�atoirement dans quelle colonne de la grille jouer.
+ * Joueur qui choisit aléatoirement dans quelle colonne de la grille jouer.
  * 
  */
-public class JoueurAleatoire implements Joueur{
+public class JoueurAleatoire implements Joueur {
 	
 	/**
 	 * Fonction qui indique dans quelle colonne de la grille jouer,

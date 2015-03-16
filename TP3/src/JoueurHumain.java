@@ -1,14 +1,8 @@
-/*
- * TP 3  : Puissance 4
- * 
- * @author Tassadit BOUADI.
- */
-
 /**
  * Joueur qui demande de choisir une colonne de la grille dans laquelle jouer.
  * 
  */
-public class JoueurHumain implements Joueur{
+public class JoueurHumain implements Joueur {
 
 	/**
 	 * Fonction qui indique dans quelle colonne de la grille jouer,
