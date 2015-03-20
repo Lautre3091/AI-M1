@@ -240,8 +240,8 @@ public class Grille{
 	
 	/**
 	 * Fonction qui donne les indices des colonnes dans lesquelles on peut jouer.
-	 * NOTE : il peut �tre int�ressant de changer l'ordre de g�n�ration des colonnes...
-	 * @return les indices des colonnes dans lesquelles on peut jouer.
+     * NOTE : il peut �tre int�ressant de changer l'ordre de g�n�ration des colonnes...
+     * @return les indices des colonnes dans lesquelles on peut jouer.
 	 */
 	public int[] generateurCoups(){
 		int[] tmp = new int[NB_COLONNES];
