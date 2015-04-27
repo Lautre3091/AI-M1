@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/Lecture.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/FonctionEvaluationProf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/Lecture.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -5,8 +5,13 @@ public class JoueurMinMax implements Joueur {
 
     double val;
     int meilleurCoup;
-    FonctionEvaluationProf fonctionEvaluationProf = new FonctionEvaluationProf();
+    //FonctionEvaluationProf fonctionEvaluation = new FonctionEvaluationProf();
+    FonctionEvaluation fonctionEvaluation = null;
     Grille grille;
+
+    public JoueurMinMax(FonctionEvaluation fonctionEvaluation){
+        this.fonctionEvaluation = fonctionEvaluation;
+    }
 
     @Override
     public Resultat coup(Grille grille, int joueur) {
@@ -21,7 +26,7 @@ public class JoueurMinMax implements Joueur {
             this.grille = this.grille.copie();
             this.grille.joueEn(joueur,coupActuel);
             /*Fonction eval*/
-            fonctionEvaluationProf.evaluation(this.grille,joueur);
+            fonctionEvaluation.evaluation(this.grille, joueur);
             val = min(3, Grille.joueurSuivant(joueur)); /*3 -> Profondeur*/
 
             if(val>max_val) {
@@ -36,7 +41,7 @@ public class JoueurMinMax implements Joueur {
     private double min(int profondeur, int joueur){
         Grille grilleTmp = this.grille.copie();
         if (profondeur==0){
-            return fonctionEvaluationProf.evaluation(grille, joueur);
+            return fonctionEvaluation.evaluation(grille, joueur);
         }
 
         double min_val = FonctionEvaluationProf.MAX;
@@ -47,7 +52,7 @@ public class JoueurMinMax implements Joueur {
             this.grille = this.grille.copie();
             this.grille.joueEn(joueur, coupActuel);
             /*Fonction eval*/
-            fonctionEvaluationProf.evaluation(this.grille, joueur);
+            fonctionEvaluation.evaluation(this.grille, joueur);
             val = max(profondeur - 1, Grille.joueurSuivant(joueur));
 
             if (val < min_val) min_val = val;
@@ -60,7 +65,7 @@ public class JoueurMinMax implements Joueur {
     private double max(int profondeur, int joueur){
         Grille grilleTmp = this.grille.copie();
         if (profondeur==0){
-            return fonctionEvaluationProf.evaluation(grille, joueur);
+            return fonctionEvaluation.evaluation(grille, joueur);
         }
 
         double max_val = FonctionEvaluationProf.MIN;
@@ -71,7 +76,7 @@ public class JoueurMinMax implements Joueur {
             this.grille = this.grille.copie();
             this.grille.joueEn(joueur,coupActuel);
             /*Fonction eval*/
-            fonctionEvaluationProf.evaluation(this.grille,joueur);
+            fonctionEvaluation.evaluation(this.grille, joueur);
             val = min(profondeur - 1, Grille.joueurSuivant(joueur));
 
             if(val>max_val) max_val = val;

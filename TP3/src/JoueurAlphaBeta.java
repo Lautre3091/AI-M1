@@ -4,107 +4,62 @@
 public class JoueurAlphaBeta implements Joueur{
 
     double val;
-    double alpha;
-    double beta;
     int meilleurCoup;
-    FonctionEvaluationProf fonctionEvaluationProf = new FonctionEvaluationProf();
+    FonctionEvaluation fonctionEvaluation=null;
     Grille grille;
+
+    public JoueurAlphaBeta(FonctionEvaluation fonctionEvaluation){
+        this.fonctionEvaluation = fonctionEvaluation;
+    }
 
     @Override
     public Resultat coup(Grille grille, int joueur) {
         this.grille = grille;
-
-        double A = FonctionEvaluationProf.MIN;
-        double B = FonctionEvaluation.MAX;
-
+        double alpha = FonctionEvaluationProf.MIN;
 
         int[] coupsPossible = this.grille.generateurCoups();
         for (int coupActuel : coupsPossible) {
             this.grille = this.grille.copie();
             this.grille.joueEn(joueur,coupActuel);
-            fonctionEvaluationProf.evaluation(this.grille,joueur);
-            val = -alphaBeta(3, Grille.joueurSuivant(joueur),-A,-B); /*3 -> Profondeur*/
+            fonctionEvaluation.evaluation(this.grille, joueur);
+            val = alphaBeta(3, Grille.joueurSuivant(joueur), alpha, FonctionEvaluation.MAX, false); /*3 -> Profondeur*/
 
-            if(val>=A) {
-                A = val;
+            if(val>alpha) {
+                alpha = val;
                 meilleurCoup = coupActuel;
-                if (A>=B) break;
             }
-            this.grille = grille;//Annulation du coups actuel
+            this.grille = grille;
         }
         return new Resultat(meilleurCoup,joueur);
     }
 
-    public double alphaBeta(int profondeur, int joueur,double A,double B){
-        Grille grilleTmp = this.grille.copie();
-            if (profondeur <= 0)
-                return fonctionEvaluationProf.evaluation(grille, joueur);
+    public double alphaBeta(int profondeur, int joueur,double alpha,double beta,boolean estEtatMax){
+        Grille grilleTmp = grille.copie();
+        if (profondeur <= 0) return fonctionEvaluation.evaluation(grille, joueur);
 
         int[] coupsPossible = this.grille.generateurCoups();
-        for (int coupActuel : coupsPossible) {
-            /*definition de la nouvelle grille*/
-            this.grille.joueEn(joueur, coupActuel);
-            /*Fonction eval*/
-            fonctionEvaluationProf.evaluation(this.grille, joueur);
-            val = -alphaBeta(profondeur - 1, joueur,-B,-A);
-            this.grille = grilleTmp;
-
-            if (val >= A){
-                A = val ;
-                meilleurCoup = coupActuel;
-                if (A >= beta)
-                    break;
+        if (estEtatMax) {
+            for (int coupActuel : coupsPossible) {
+                this.grille.joueEn(joueur, coupActuel);
+                alpha = Math.max(alpha, alphaBeta(profondeur - 1, joueur, alpha, beta, true));
+                if (alpha >= beta) {
+                    this.grille = grilleTmp;
+                    return alpha;
+                }
             }
-        }
-        return alpha;
-    }
-
-
-    private double min(int profondeur, int joueur){
-        Grille grilleTmp = this.grille.copie();
-        if (profondeur==0){
-            return fonctionEvaluationProf.evaluation(grille, joueur);
-        }
-
-        double min_val = FonctionEvaluationProf.MAX;
-
-        int[] coupsPossible = this.grille.generateurCoups();
-        for (int coupActuel : coupsPossible) {
-            /*definition de la nouvelle grille*/
-            this.grille = this.grille.copie();
-            this.grille.joueEn(joueur, coupActuel);
-            /*Fonction eval*/
-            fonctionEvaluationProf.evaluation(this.grille, joueur);
-            val = max(profondeur - 1, Grille.joueurSuivant(joueur));
-
-            if (val < min_val) min_val = val;
             this.grille = grilleTmp;
+            return alpha;
+        } else {
+            for (int coupActuel : coupsPossible) {
+                this.grille.joueEn(joueur, coupActuel);
+                beta = Math.min(beta, alphaBeta(profondeur - 1, joueur, alpha, beta, false));
+                if (beta <= alpha) {
+                    this.grille = grilleTmp;
+                    return beta;
+                }
+            }
+            this.grille = grilleTmp;
+            return beta;
         }
-        return min_val;
-
-    }
-
-    private double max(int profondeur, int joueur){
-        Grille grilleTmp = this.grille.copie();
-        if (profondeur==0){
-            return fonctionEvaluationProf.evaluation(grille, joueur);
-        }
-
-        double max_val = FonctionEvaluationProf.MIN;
-
-        int[] coupsPossible = this.grille.generateurCoups();
-        for (int coupActuel : coupsPossible) {
-            /*definition de la nouvelle grille*/
-            this.grille = this.grille.copie();
-            this.grille.joueEn(joueur,coupActuel);
-            /*Fonction eval*/
-            fonctionEvaluationProf.evaluation(this.grille,joueur);
-            val = min(profondeur - 1, Grille.joueurSuivant(joueur));
-
-            if(val>max_val) max_val = val;
-            this.grille=grilleTmp;
-        }
-        return max_val;
-
     }
 }

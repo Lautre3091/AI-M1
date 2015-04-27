@@ -8,8 +8,8 @@ public class Puissance4 {
 		//cr�ation des joueurs et appel de l33
 
 		// a fonction jouer
-		Joueur joueur1 = new JoueurHumain();
-		Joueur joueur2 = new JoueurHumain();
+		Joueur joueur1 = new JoueurAlphaBeta(new FonctionEvaluationPerso());
+		Joueur joueur2 = new JoueurMinMax(new FonctionEvaluationPerso());
 		
 		jouer(joueur1, joueur2);
 	}
@@ -23,7 +23,6 @@ public class Puissance4 {
 	 */
 	public static void jouer(Joueur joueur1, Joueur joueur2){
 		Resultat res;
-		int coup; //A quoi je sert ??? TODO
 		Grille grille = new Grille();
 
 		Joueur joueurCour = joueur1;
